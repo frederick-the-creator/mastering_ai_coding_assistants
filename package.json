@@ -14,7 +14,9 @@
     "vue-router": "4.2.5",
     "pinia": "2.1.6",
     "vee-validate": "4.11.8",
-    "axios": "1.5.1"
+    "axios": "1.5.1",
+    "@vueup/vue-quill": "^1.2.0",
+    "dompurify": "^3.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
