@@ -10,14 +10,17 @@
           required
         ></v-text-field>
         
-        <v-textarea
-          v-model="content"
-          label="Content"
-          :rules="[v => !!v || 'Content is required']"
-          required
-          auto-grow
-          rows="4"
-        ></v-textarea>
+        <div class="mb-4">
+          <label class="text-subtitle-1 mb-2 d-block">Content <span class="text-red">*</span></label>
+          <QuillEditor
+            v-model:content="content"
+            :options="defaultEditorOptions"
+            contentType="html"
+            :style="{ height: '200px', marginBottom: '16px' }"
+            :rules="[v => !!v || 'Content is required']"
+          />
+          <div class="text-caption text-red" v-if="!content">Content is required</div>
+        </div>
         
         <v-combobox
           v-model="tags"
@@ -40,6 +43,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useJournalStore } from '../store';
+import { QuillEditor } from '@vueup/vue-quill';
+import { defaultEditorOptions } from '../plugins/quill';
 
 const journalStore = useJournalStore();
 
@@ -51,7 +56,7 @@ const tags = ref([]);
 const submitForm = () => {
   const { valid } = form.value.validate();
   
-  if (valid) {
+  if (valid && content.value) {
     journalStore.addEntry({
       title: title.value,
       content: content.value,
